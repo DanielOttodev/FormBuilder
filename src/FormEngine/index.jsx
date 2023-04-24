@@ -73,13 +73,13 @@ rowFields = fieldSet[x].Fields.map((columnField,y) => {
 // Render the row with it's respective columns
 console.log('RowFields:',rowFields);
 
-let row = <div className="group/row ease-in hover:border-x-2 rounded border-sky-300">
-        <BsFillArrowUpSquareFill size={24} className="hidden group-hover/row:block text-sky-300 hover:cursor-pointer"></BsFillArrowUpSquareFill>
+let row = <div className="group/row ease-in hover:border-2 border-dashed rounded border-orange-300" data-target={fieldSet[x].id}>
+        <BsFillArrowUpSquareFill size={24} className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowUpSquareFill>
             <div key={x}
          className={'  grid gap-x-3 p-2 mx-auto grid-cols-'+gridCount}>
         {rowFields}
         </div>
-        <BsFillArrowDownSquareFill size={24} onClick={() =>{ alert('clicked')}} className="hidden group-hover/row:block text-sky-300 hover:cursor-pointer"></BsFillArrowDownSquareFill>
+        <BsFillArrowDownSquareFill size={24} onClick={() =>{ alert('clicked')}} className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowDownSquareFill>
 </div>
 
        
@@ -99,7 +99,7 @@ return(
     <button onClick={submit} className="bg-sky-500 px-4 py-2 text-white rounded hover:outline-gray-300 mt-5 outline-none">Submit</button>
     </div>
     <div className="text-center">
-    <button onClick={addRow} className="p-2 rounded mt-5 text-gray-400 outline-dashed outline-1 hover:outline-gray-500 focused:outline-none">Add Row<BsPlusCircle size={24} className="inline ml-2 text-gray-400" ></BsPlusCircle></button>
+    <button onClick={addRow} className="w-full p-2 rounded mt-5 text-gray-400 outline-dashed outline-1 hover:outline-gray-500 focused:outline-none">Add Row<BsPlusCircle size={24} className="inline ml-2 text-gray-400" ></BsPlusCircle></button>
     </div>
     </div>
     {previousField.length >= 1 && <button onClick={undo} className="ml-2 p-1 rounded hover:text-sky-500 text-sm text-gray-500 "><FaUndo size={16} className="inline"></FaUndo></button> }
