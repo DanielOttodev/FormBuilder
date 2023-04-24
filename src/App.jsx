@@ -2,7 +2,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import FormEngine from './FormEngine'
-import { Toolbox } from './FormEngine/components/Toolbox'
+
 
 
 function App() {
@@ -11,13 +11,7 @@ function App() {
 
    
     <div className='grid grid-cols-5 gap-3'>
-      <div className='col-span-2'>
-   
-        <Toolbox></Toolbox>
-  
-      
-    </div> 
-      <div className='border rounded shadow p-10 col-span-3'>
+      <div className='border rounded shadow p-10 col-span-5'>
         <div className="flex justify-center">
           <a href="https://vitejs.dev">
             <img src={viteLogo} className="logo" alt="Vite logo" />
