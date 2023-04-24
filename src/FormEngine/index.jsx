@@ -82,7 +82,7 @@ return(
     </div>
     <div>
     <button onClick={submit} className="bg-sky-500 px-4 py-2 text-white rounded hover:outline-gray-300 mt-5 outline-none">Submit</button>
-    <button onClick={() => {console.log(fieldSet)}}>Test</button>
+    
     </div>
     </div>
 
