@@ -1,6 +1,5 @@
 
 Tools:
-Bootstrap CSS ( Grid system only )
 Tailwind CSS  (Theme)
 React 
 Vite or Next
