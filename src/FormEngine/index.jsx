@@ -1,15 +1,19 @@
 import { useState } from "react";
-import { BsPlusCircle, BsXCircle, BsClipboard, BsPencilFill,BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill,BsFillArrowUpSquareFill,BsFillArrowDownSquareFill } from "react-icons/bs";
+import { BsPlusCircle, BsXCircle, BsPencilFill,BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill,BsFillArrowUpSquareFill,BsFillArrowDownSquareFill,BsTrash3 } from "react-icons/bs";
 import {FaUndo} from "react-icons/fa"
-import { Draggable } from "react-beautiful-dnd";
+
 
 export default function FormEngine(){
 
     const [previousField,setPreviousField] = useState([]);
     const [fieldSet,setFieldSet] = useState([
+    
         {Fields:[{type:'text',placeholder:'Name',id:'drag21'}],id:'row1'},
         {Fields:[{type:'number',placeholder:'Phone',id:'drag22'},{type:'text',placeholder:'Email',id:'drag23'},{type:'number',placeholder:'ABN',id:'drag24'}],id:'row2'},
-        {Fields:[{type:'text',placeholder:'Test2',id:'drag25'},{type:'number',placeholder:'Test3',id:'drag26'}],id:'row3'}
+        {Fields:[{type:'text',placeholder:'Test2',id:'drag25'},{type:'number',placeholder:'Test3',id:'drag26'}],id:'row3'},
+        {Fields:[],id:'row4'},
+        
+    
     ]);
 
     const [formData,setFormData] = useState({
@@ -35,6 +39,9 @@ function removeField(e){
 function submit(){
     alert('Submitted!')
 }
+function addNewField(){
+    alert('new field dialog')
+}
 
 function addRow(){
     alert('Lets make a new row!')
@@ -47,14 +54,17 @@ let rowFields;
 let allRows = []
 
 for(let x = 0; x < fieldSet.length; x ++){
+    console.log('NEXT LOOP');
 // Loop through the main fields array to determine the amount of rows; Loop through the row fields to determine the amount of columns & fields in the row. 
 // Calculate how many columns in the row
-
 let gridCount;
 gridCount = fieldSet[x].Fields.length
+console.log('LEN',fieldSet[x].Fields.length);
+if(gridCount > 0 ) {
+console.log('Grid count is over 0');
 
-rowFields = fieldSet[x].Fields.map((columnField,y) => {
-    return <div key={y}>
+rowFields = fieldSet[x].Fields.map((columnField) => {
+    return <div key={columnField.id}>
                 <div className="container relative rounded border-dotted cursor-pointer group ">
                     <div className="overlay flex hidden group-hover:block border-2 border-gray-500 border-dashed rounded">
                     <button className="p-1 rounded-md mx-1 text-center align-middle text-xs cursor-pointer hover:bg-slate-100">Add<BsPlusCircle size={14} className=" inline text-green-600 mx-2"></BsPlusCircle> </button>
@@ -69,25 +79,37 @@ rowFields = fieldSet[x].Fields.map((columnField,y) => {
                 </div>
             </div>
    
-})
-// Render the row with it's respective columns
-console.log('RowFields:',rowFields);
+})}
 
-let row = <div className="group/row ease-in hover:border-2 border-dashed rounded border-orange-300" data-target={fieldSet[x].id}>
+else{
+    
+    console.log('Grid count is not over 0')
+    rowFields = <div key={'new'}>
+    <div className="container rounded border-dotted cursor-pointer group mt-2">
+        <button className="rounded p-2 text-lg " onClick={addNewField}>Add Element</button>
+    </div>
+</div>
+console.log()
+
+}
+
+// Render the row with it's respective columns
+let row = <div className="group/row ease-in hover:border-2 border-dashed rounded border-orange-300" data-target={fieldSet[x].id} key={fieldSet[x].id}>
         <BsFillArrowUpSquareFill size={24} className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowUpSquareFill>
-            <div key={x}
+            <div 
          className={'  grid gap-x-3 p-2 mx-auto grid-cols-'+gridCount}>
         {rowFields}
         </div>
+        <div className="flex justify-between">
         <BsFillArrowDownSquareFill size={24} onClick={() =>{ alert('clicked')}} className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowDownSquareFill>
-</div>
-
-       
-console.log('Row:',row);        
+        <BsXCircle size={24} onClick={() =>{ alert('clicked')}} className="hidden inline mb-1 mr-1  right group-hover/row:block text-gray-800 hover:cursor-pointer"></BsXCircle>
+        </div>
+     
+</div>  
 allRows.push(row);
 }
 
-console.log('AR:',allRows)
+console.log('FS',allRows)
 return(
     <div>
     <div className="m-3 container mx-auto  ">
@@ -103,7 +125,7 @@ return(
     </div>
     </div>
     {previousField.length >= 1 && <button onClick={undo} className="ml-2 p-1 rounded hover:text-sky-500 text-sm text-gray-500 "><FaUndo size={16} className="inline"></FaUndo></button> }
-
+    <button onClick={() => console.log(fieldSet)}>test</button>
     </div>
 
 )}
