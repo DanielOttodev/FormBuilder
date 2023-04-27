@@ -49,17 +49,49 @@ function addRow(){
 function undo(){
 setFieldSet(previousField);
 }
+function rowUp(elem){
+let index = fieldSet.findIndex((x) => x.id == elem)
+// Check it is not the first row / position 0
+if(index === 0){
+    alert("Can't move up further")
+} else{
+// Move the Row up
+let copyArr = fieldSet;
+let element = fieldSet[index];
+copyArr.splice(index, 1);
+copyArr.splice(index - 1, 0, element);
+let newArr = [... copyArr];
+setFieldSet(newArr);
+}}
+
+function rowDown(elem){
+let index = fieldSet.findIndex((x) => x.id == elem);
+console.log(index);
+console.log(fieldSet);
+if(index === fieldSet.length - 1){
+    alert('Cant move down');
+}else{
+let copyArr = fieldSet;
+let element = fieldSet[index];
+copyArr.splice(index, 1);
+copyArr.splice(index + 1, 0, element);
+let newArr = [... copyArr];
+setFieldSet(newArr);
+}
+
+
+}
+
+
 
 let rowFields;
 let allRows = []
 
 for(let x = 0; x < fieldSet.length; x ++){
-    console.log('NEXT LOOP');
 // Loop through the main fields array to determine the amount of rows; Loop through the row fields to determine the amount of columns & fields in the row. 
 // Calculate how many columns in the row
 let gridCount;
 gridCount = fieldSet[x].Fields.length
-console.log('LEN',fieldSet[x].Fields.length);
 if(gridCount > 0 ) {
 console.log('Grid count is over 0');
 
@@ -83,29 +115,26 @@ rowFields = fieldSet[x].Fields.map((columnField) => {
 
 else{
     
-    console.log('Grid count is not over 0')
     rowFields = <div key={'new'}>
     <div className="container rounded border-dotted cursor-pointer group mt-2">
         <button className="rounded p-2 text-lg " onClick={addNewField}>Add Element</button>
     </div>
 </div>
-console.log()
-
 }
-
+console.log(gridCount);
 // Render the row with it's respective columns
-let row = <div className="group/row ease-in hover:border-2 border-dashed rounded border-orange-300" data-target={fieldSet[x].id} key={fieldSet[x].id}>
-        <BsFillArrowUpSquareFill size={24} className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowUpSquareFill>
+let row = <div className={"group/row ease-in hover:border-2 border-dashed rounded border-orange-300"} data-target={fieldSet[x].id} key={fieldSet[x].id}>
+        <BsFillArrowUpSquareFill onClick={() => rowUp(fieldSet[x].id)} size={24} className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowUpSquareFill>
             <div 
-         className={'  grid gap-x-3 p-2 mx-auto grid-cols-'+gridCount}>
+         className={'grid gap-x-3 p-1 mx-auto grid-cols-'+gridCount}>
         {rowFields}
         </div>
         <div className="flex justify-between">
-        <BsFillArrowDownSquareFill size={24} onClick={() =>{ alert('clicked')}} className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowDownSquareFill>
-        <BsXCircle size={24} onClick={() =>{ alert('clicked')}} className="hidden inline mb-1 mr-1  right group-hover/row:block text-gray-800 hover:cursor-pointer"></BsXCircle>
+        <BsFillArrowDownSquareFill size={24} onClick={() => rowDown(fieldSet[x].id)}  className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowDownSquareFill>
+        <BsXCircle size={24}  className="hidden inline mb-1 mr-1  right group-hover/row:block text-gray-800 hover:cursor-pointer"></BsXCircle>
         </div>
      
-</div>  
+    </div>  
 allRows.push(row);
 }
 
@@ -113,10 +142,8 @@ console.log('FS',allRows)
 return(
     <div>
     <div className="m-3 container mx-auto  ">
-    <h3 className="text-3xl">{formData.form.name}</h3>
+    <h3 className="text-3xl mb-5">{formData.form.name}</h3>
     {allRows}
-
-
     <div>
     <button onClick={submit} className="bg-sky-500 px-4 py-2 text-white rounded hover:outline-gray-300 mt-5 outline-none">Submit</button>
     </div>
