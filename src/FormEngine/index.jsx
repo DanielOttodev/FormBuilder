@@ -28,12 +28,10 @@ function removeField(e){
         setPreviousField(prev);
         const newData = prev.map(items => ({
             ...items,
-            Fields: items.Fields.filter(item => item.id !== arr[1])
-       
+            Fields: items.Fields.filter(item => item.id !== arr[1])      
         }))
         return newData;
     })
-    console.log('AFTER SPLICE:',fieldSet);
 }
 
 function submit(){
@@ -42,24 +40,62 @@ function submit(){
 function addNewField(){
     alert('new field dialog')
 }
+function innerRight(elem,rowIndex){
+    console.log(elem,rowIndex);
+    let index = fieldSet[rowIndex].Fields.findIndex((x) => x.id == elem);
+    if (index === fieldSet[rowIndex].Fields.length - 1){
+        alert('Cant move right')
+    }else{
+        let copyArr = fieldSet[rowIndex].Fields;
+        let element = fieldSet[rowIndex].Fields[index];
+        copyArr.splice(index, 1);
+        copyArr.splice(index + 1, 0, element);
+        let newArr = [... copyArr];
+        let newFieldSet = fieldSet;
+        newFieldSet[rowIndex].Fields = newArr;
+        let updateSet = [...newFieldSet];
+        setFieldSet(updateSet);
+    }
+}
 
+// Moves a column left within a row in the form
+function innerLeft(elem,rowIndex){
+
+let index = fieldSet[rowIndex].Fields.findIndex((x) => x.id == elem);
+if (index === 0){
+    alert('Cant move left')
+}else{
+    let copyArr = fieldSet[rowIndex].Fields;
+    let element = fieldSet[rowIndex].Fields[index];
+    copyArr.splice(index, 1);
+    copyArr.splice(index - 1, 0, element);
+    let newArr = [... copyArr];
+    let newFieldSet = fieldSet;
+    newFieldSet[rowIndex].Fields = newArr;
+    let updateSet = [...newFieldSet];
+    setFieldSet(updateSet);
+}}
+
+// Adds a row to the form
 function addRow(){
 let arr = fieldSet;
-
 let [...newArr] = arr;
 newArr.push({Fields:[],id: uuidv4()})
 setFieldSet(newArr);
 }
+
+// Return the state of the form before the last change
 function undo(){
 setFieldSet(previousField);
 }
+
+// Move a row up in the form
 function rowUp(elem){
 let index = fieldSet.findIndex((x) => x.id == elem)
 // Check it is not the first row / position 0
 if(index === 0){
     alert("Can't move up further")
 } else{
-// Move the Row up
 let copyArr = fieldSet;
 let element = fieldSet[index];
 copyArr.splice(index, 1);
@@ -68,6 +104,7 @@ let newArr = [... copyArr];
 setFieldSet(newArr);
 }}
 
+// Move a row down in the form
 function rowDown(elem){
 let index = fieldSet.findIndex((x) => x.id == elem);
 if(index === fieldSet.length - 1){
@@ -81,6 +118,7 @@ let newArr = [... copyArr];
 setFieldSet(newArr);
 }}
 
+// Delete a row from the form
 function deleteRow(elem){
 let index = fieldSet.findIndex((x) => x.id == elem);
 let copyArr = fieldSet;
@@ -108,13 +146,13 @@ rowFields = fieldSet[x].Fields.map((columnField) => {
                     <button className="p-1 rounded-md mx-1 text-center align-middle text-xs cursor-pointer hover:bg-slate-100">Edit <BsPencilFill size={14} className=" inline text-blue-600 mx-2"></BsPencilFill> </button>
                     <button data-target={x + '-' +columnField.id} onClick={removeField} className="hover:bg-red-600 p-1 rounded-md text-center align-middle text-xs cursor-pointer mx-1 bg-red-500 text-white">Delete<BsXCircle size={14} className="text-white inline text-red-600 mx-2"></BsXCircle> </button>
                     <div className="flex justify-between">
-                       <BsFillArrowLeftCircleFill data-target={x + '-' +columnField.id} onClick={() => {alert('Moving!')}} size={20} className="ml-3"></BsFillArrowLeftCircleFill>
-                       <BsFillArrowRightCircleFill data-target={x + '-' +columnField.id} size={20} className="mr-3"></BsFillArrowRightCircleFill>
+                       <BsFillArrowLeftCircleFill data-target={x + '-' +columnField.id} onClick={() => innerLeft(columnField.id,x)} size={20} className="ml-3"></BsFillArrowLeftCircleFill>
+                       <BsFillArrowRightCircleFill data-target={x + '-' +columnField.id} onClick={() => innerRight(columnField.id,x)} size={20} className="mr-3"></BsFillArrowRightCircleFill>
                     </div>
                     </div>
                     <div className="text-left">
                     <label htmlFor="" className="text-left">{columnField.placeholder}</label>
-                    <input  className="text-2xl p-2 m-1  border-2 rounded w-full outline-gray-300" type={columnField.type} placeholder={columnField.placeholder}></input>
+                    <input  className="text-2xl p-1 m-1  border-2 rounded w-full outline-gray-300" type={columnField.type} placeholder={columnField.placeholder}></input>
                     </div>
 
                 </div>
@@ -146,7 +184,6 @@ allRows.push(row);
 }
 return(
     <div className="grid grid-cols-6 gap-2  ">
-
     <div className="m-3 container mx-auto col-span-6 border  shadow p-5">
     <h3 className="text-3xl mb-5 text-center">{formData.form.name}</h3>
     {allRows}
