@@ -144,11 +144,11 @@ let row = <div className={"group/row ease-in hover:border-2 border-dashed rounde
 allRows.push(row);
 }
 return(
-    <div className="grid grid-cols-5 border-red-500 border">
-    <div className="col-span-2">
+    <div className="grid grid-cols-6 gap-2 ">
+    <div className="lg:col-span-2 sm:col-span-6" >
         <EditPanel></EditPanel>
     </div>
-    <div className="m-3 container mx-auto col-span-3">
+    <div className="m-3 container mx-auto lg:col-span-4 sm:col-span-6">
     <h3 className="text-3xl mb-5 text-center">{formData.form.name}</h3>
     {allRows}
     <div className="text-center">
