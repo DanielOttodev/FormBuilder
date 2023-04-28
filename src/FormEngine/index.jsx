@@ -2,16 +2,16 @@ import { useState } from "react";
 import { BsPlusCircle, BsXCircle, BsPencilFill,BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill,BsFillArrowUpSquareFill,BsFillArrowDownSquareFill,BsTrash3 } from "react-icons/bs";
 import {FaUndo} from "react-icons/fa"
 import { EditPanel } from "./components/EditPanel";
-
+import { v4 as uuidv4 } from 'uuid';
 export default function FormEngine(){
 
     const [previousField,setPreviousField] = useState([]);
     const [fieldSet,setFieldSet] = useState([
     
-        {Fields:[{type:'text',placeholder:'Name',id:'drag21'}],id:'row1'},
-        {Fields:[{type:'number',placeholder:'Phone',id:'drag22'},{type:'text',placeholder:'Email',id:'drag23'},{type:'number',placeholder:'ABN',id:'drag24'}],id:'row2'},
-        {Fields:[{type:'text',placeholder:'Test2',id:'drag25'},{type:'number',placeholder:'Test3',id:'drag26'}],id:'row3'},
-        {Fields:[],id:'row4'},
+        {Fields:[{type:'text',placeholder:'Name',id:'drag21'}],id: uuidv4()},
+        {Fields:[{type:'number',placeholder:'Phone',id:'drag22'},{type:'text',placeholder:'Email',id:'drag23'},{type:'number',placeholder:'ABN',id:'drag24'}],id: uuidv4()},
+        {Fields:[{type:'text',placeholder:'Test2',id:'drag25'},{type:'number',placeholder:'Test3',id:'drag26'}],id: uuidv4()},
+        {Fields:[],id: uuidv4()},
         
     
     ]);
@@ -44,7 +44,11 @@ function addNewField(){
 }
 
 function addRow(){
-    alert('Lets make a new row!')
+let arr = fieldSet;
+
+let [...newArr] = arr;
+newArr.push({Fields:[],id: uuidv4()})
+setFieldSet(newArr);
 }
 function undo(){
 setFieldSet(previousField);
