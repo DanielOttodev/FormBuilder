@@ -16,8 +16,8 @@ let componentList = components.map(({name,icon},index) => {
          </div>
 
 })
-    return <div className="shadow mx-3 bg-gray-100 py-5 px-2">
-        <h2 className="font-bold text-2xl">Field Editor</h2>
+    return <div className="mx-3 shadow py-10 px-3">
+        <h2 className="font-bold text-2xl text-gray-500">Field Editor</h2>
         <p>Drag and drop fields from the Toolbox to your form design on the right.</p>
         <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2">
            {componentList}  

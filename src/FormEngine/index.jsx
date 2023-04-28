@@ -127,7 +127,6 @@ else{
     </div>
 </div>
 }
-console.log(gridCount);
 // Render the row with it's respective columns
 let row = <div className={"group/row ease-in hover:border-2 border-dashed rounded border-orange-300"} data-target={fieldSet[x].id} key={fieldSet[x].id}>
         <BsFillArrowUpSquareFill onClick={() => rowUp(fieldSet[x].id)} size={24} className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowUpSquareFill>
@@ -145,10 +144,8 @@ allRows.push(row);
 }
 return(
     <div className="grid grid-cols-6 gap-2 ">
-    <div className="lg:col-span-2 sm:col-span-6" >
-        <EditPanel></EditPanel>
-    </div>
-    <div className="m-3 container mx-auto lg:col-span-4 sm:col-span-6">
+
+    <div className="m-3 container mx-auto col-span-6">
     <h3 className="text-3xl mb-5 text-center">{formData.form.name}</h3>
     {allRows}
     <div className="text-center">
@@ -156,9 +153,13 @@ return(
     </div>
     <div className="text-center">
     <button onClick={addRow} className="w-full p-2 rounded mt-5 text-gray-400 outline-dashed outline-1 hover:outline-gray-500 focused:outline-none">Add Row<BsPlusCircle size={24} className="inline ml-2 text-gray-400" ></BsPlusCircle></button>
-    </div>
-    </div>
     {previousField.length >= 1 && <button onClick={undo} className="ml-2 p-1 rounded hover:text-sky-500 text-sm text-gray-500 "><FaUndo size={16} className="inline"></FaUndo></button> }
+    </div>
+    </div>
+    <div className="col-span-6 " >
+        <EditPanel></EditPanel>
+    </div>
+   
     </div>
 
 )}
