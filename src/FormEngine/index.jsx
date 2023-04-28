@@ -77,13 +77,16 @@ copyArr.splice(index, 1);
 copyArr.splice(index + 1, 0, element);
 let newArr = [... copyArr];
 setFieldSet(newArr);
+}}
+
+function deleteRow(elem){
+let index = fieldSet.findIndex((x) => x.id == elem);
+let copyArr = fieldSet;
+copyArr.splice(index,1);
+let newArr = [...copyArr];
+setFieldSet(newArr);
+
 }
-
-
-}
-
-
-
 let rowFields;
 let allRows = []
 
@@ -107,12 +110,15 @@ rowFields = fieldSet[x].Fields.map((columnField) => {
                        <BsFillArrowRightCircleFill data-target={x + '-' +columnField.id} size={20} className="mr-3"></BsFillArrowRightCircleFill>
                     </div>
                     </div>
+                    <div className="text-left">
+                    <label htmlFor="" className="text-left">{columnField.placeholder}</label>
                     <input  className="text-2xl p-2 m-1  border-2 rounded w-full outline-gray-300" type={columnField.type} placeholder={columnField.placeholder}></input>
+                    </div>
+
                 </div>
             </div>
    
 })}
-
 else{
     
     rowFields = <div key={'new'}>
@@ -131,7 +137,7 @@ let row = <div className={"group/row ease-in hover:border-2 border-dashed rounde
         </div>
         <div className="flex justify-between">
         <BsFillArrowDownSquareFill size={24} onClick={() => rowDown(fieldSet[x].id)}  className="hidden group-hover/row:block text-orange-300 hover:cursor-pointer"></BsFillArrowDownSquareFill>
-        <BsXCircle size={24}  className="hidden inline mb-1 mr-1  right group-hover/row:block text-gray-800 hover:cursor-pointer"></BsXCircle>
+        <BsXCircle size={24} onClick={() => deleteRow(fieldSet[x].id)}  className="hidden inline mb-1 mr-1 right group-hover/row:block text-gray-800 hover:cursor-pointer"></BsXCircle>
         </div>
      
     </div>  
@@ -141,7 +147,7 @@ allRows.push(row);
 console.log('FS',allRows)
 return(
     <div>
-    <div className="m-3 container mx-auto  ">
+    <div className="m-3 container mx-auto">
     <h3 className="text-3xl mb-5">{formData.form.name}</h3>
     {allRows}
     <div>
@@ -152,7 +158,6 @@ return(
     </div>
     </div>
     {previousField.length >= 1 && <button onClick={undo} className="ml-2 p-1 rounded hover:text-sky-500 text-sm text-gray-500 "><FaUndo size={16} className="inline"></FaUndo></button> }
-    <button onClick={() => console.log(fieldSet)}>test</button>
     </div>
 
 )}
