@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BsPlusCircle, BsXCircle, BsPencilFill,BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill,BsFillArrowUpSquareFill,BsFillArrowDownSquareFill,BsTrash3 } from "react-icons/bs";
 import {FaUndo} from "react-icons/fa"
-
+import { EditPanel } from "./components/EditPanel";
 
 export default function FormEngine(){
 
@@ -122,8 +122,8 @@ rowFields = fieldSet[x].Fields.map((columnField) => {
 else{
     
     rowFields = <div key={'new'}>
-    <div className="container rounded border-dotted cursor-pointer group mt-2">
-        <button className="rounded p-2 text-lg " onClick={addNewField}>Add Element</button>
+    <div className="container rounded border-dotted cursor-pointer group mt-2 text-center">
+        <button className="rounded p-2 text-lg bg-slate-100" onClick={addNewField}>Add Element</button>
     </div>
 </div>
 }
@@ -143,15 +143,16 @@ let row = <div className={"group/row ease-in hover:border-2 border-dashed rounde
     </div>  
 allRows.push(row);
 }
-
-console.log('FS',allRows)
 return(
-    <div>
-    <div className="m-3 container mx-auto">
-    <h3 className="text-3xl mb-5">{formData.form.name}</h3>
+    <div className="grid grid-cols-5 border-red-500 border">
+    <div className="col-span-2">
+        <EditPanel></EditPanel>
+    </div>
+    <div className="m-3 container mx-auto col-span-3">
+    <h3 className="text-3xl mb-5 text-center">{formData.form.name}</h3>
     {allRows}
-    <div>
-    <button onClick={submit} className="bg-sky-500 px-4 py-2 text-white rounded hover:outline-gray-300 mt-5 outline-none">Submit</button>
+    <div className="text-center">
+    <button onClick={submit} className="bg-sky-500 px-4 py-2 text-white rounded hover:outline-gray-300 mt-5 outline-none ">Submit</button>
     </div>
     <div className="text-center">
     <button onClick={addRow} className="w-full p-2 rounded mt-5 text-gray-400 outline-dashed outline-1 hover:outline-gray-500 focused:outline-none">Add Row<BsPlusCircle size={24} className="inline ml-2 text-gray-400" ></BsPlusCircle></button>

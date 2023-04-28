@@ -1,6 +1,6 @@
 import {BsTextareaT, BsTextParagraph, BsCheck2Square, BsListTask} from 'react-icons/bs'
 
-export function Toolbox(){
+export function EditPanel(){
 
 let components = [
     {name:'Text Field',type:'text', icon: <BsTextareaT size="30" className='inline ml-2' />,id:'abc'},
@@ -17,7 +17,7 @@ let componentList = components.map(({name,icon},index) => {
 
 })
     return <div className="shadow mx-3 bg-gray-100 py-5 px-2">
-        <h2 className="font-bold text-2xl">Toolbox</h2>
+        <h2 className="font-bold text-2xl">Field Editor</h2>
         <p>Drag and drop fields from the Toolbox to your form design on the right.</p>
         <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2">
            {componentList}  
