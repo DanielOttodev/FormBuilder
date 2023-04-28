@@ -70,8 +70,6 @@ setFieldSet(newArr);
 
 function rowDown(elem){
 let index = fieldSet.findIndex((x) => x.id == elem);
-console.log(index);
-console.log(fieldSet);
 if(index === fieldSet.length - 1){
     alert('Cant move down');
 }else{
@@ -105,7 +103,7 @@ console.log('Grid count is over 0');
 rowFields = fieldSet[x].Fields.map((columnField) => {
     return <div key={columnField.id}>
                 <div className="container relative rounded border-dotted cursor-pointer group ">
-                    <div className="overlay flex hidden group-hover:block border-2 border-gray-500 border-dashed rounded">
+                    <div className="overlay flex hidden group-hover:block border-2 border-gray-500 border-dashed rounded text-center">
                     <button className="p-1 rounded-md mx-1 text-center align-middle text-xs cursor-pointer hover:bg-slate-100">Add<BsPlusCircle size={14} className=" inline text-green-600 mx-2"></BsPlusCircle> </button>
                     <button className="p-1 rounded-md mx-1 text-center align-middle text-xs cursor-pointer hover:bg-slate-100">Edit <BsPencilFill size={14} className=" inline text-blue-600 mx-2"></BsPencilFill> </button>
                     <button data-target={x + '-' +columnField.id} onClick={removeField} className="hover:bg-red-600 p-1 rounded-md text-center align-middle text-xs cursor-pointer mx-1 bg-red-500 text-white">Delete<BsXCircle size={14} className="text-white inline text-red-600 mx-2"></BsXCircle> </button>
@@ -147,9 +145,9 @@ let row = <div className={"group/row ease-in hover:border-2 border-dashed rounde
 allRows.push(row);
 }
 return(
-    <div className="grid grid-cols-6 gap-2 ">
+    <div className="grid grid-cols-6 gap-2  ">
 
-    <div className="m-3 container mx-auto col-span-6">
+    <div className="m-3 container mx-auto col-span-6 border  shadow p-5">
     <h3 className="text-3xl mb-5 text-center">{formData.form.name}</h3>
     {allRows}
     <div className="text-center">

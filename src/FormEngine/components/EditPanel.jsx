@@ -1,26 +1,13 @@
-import {BsTextareaT, BsTextParagraph, BsCheck2Square, BsListTask} from 'react-icons/bs'
-
+import { useState } from 'react'
 export function EditPanel(){
 
-let components = [
-    {name:'Text Field',type:'text', icon: <BsTextareaT size="30" className='inline ml-2' />,id:'abc'},
-    {name:'Text Box',type:'text', icon: <BsTextParagraph size="30" className='inline ml-2' />,id:'abcd'},
-    {name:'CheckBox',type:'checkbox', icon: <BsCheck2Square size="30" className='inline ml-2' />,id:'abcde'},
-    {name:'Dropdown',type:'file', icon: <BsListTask size="30" className='inline ml-2' />,id:'abcdef'}
-]
+const [selected,setSelected] = useState(false);
 
-let componentList = components.map(({name,icon},index) => {
-    return  <div             
-        className='bg-slate-200 p-2 m-2 rounded-md cursor-move' key={index}>
-        <h3 className='text-1xl cursor-move'>{name} {icon}  </h3>
-         </div>
-
-})
     return <div className="mx-3 shadow py-10 px-3">
         <h2 className="font-bold text-2xl text-gray-500">Field Editor</h2>
-        <p>Drag and drop fields from the Toolbox to your form design on the right.</p>
+        {!selected &&  <p>Select a field from the form to start editing.</p> }
         <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2">
-           {componentList}  
+    
         </div>
     </div>
 }
