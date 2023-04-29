@@ -3,14 +3,15 @@ import { BsPlusCircle, BsXCircle, BsPencilFill,BsFillArrowLeftCircleFill, BsFill
 import {FaUndo} from "react-icons/fa"
 import { EditPanel } from "./components/EditPanel";
 import { v4 as uuidv4 } from 'uuid';
+import { FormField } from "./components/FormFields";
 export default function FormEngine(){
-
+    const [selected,setSelected] = useState({});
     const [previousField,setPreviousField] = useState([]);
     const [fieldSet,setFieldSet] = useState([
     
-        {Fields:[{type:'text',placeholder:'Name',id:'drag21'}],id: uuidv4()},
-        {Fields:[{type:'number',placeholder:'Phone',id:'drag22'},{type:'text',placeholder:'Email',id:'drag23'},{type:'number',placeholder:'ABN',id:'drag24'}],id: uuidv4()},
-        {Fields:[{type:'text',placeholder:'Test2',id:'drag25'},{type:'number',placeholder:'Test3',id:'drag26'}],id: uuidv4()},
+        {Fields:[{type:'text',placeholder:'Name',id:uuidv4(), html:'input'}],id: uuidv4()},
+        {Fields:[{type:'number',placeholder:'Phone',id:uuidv4(), html:'input'},{type:'text',placeholder:'Email',id:uuidv4(), html:'input'},{type:'number',placeholder:'ABN',id:uuidv4(), html:'input'}],id: uuidv4()},
+        {Fields:[{type:'text',placeholder:'Test2',id:uuidv4(), html:'input'},{type:'number',placeholder:'Test3',id:uuidv4(), html:'input'}],id: uuidv4()},
         {Fields:[],id: uuidv4()},
         
     
@@ -21,6 +22,12 @@ export default function FormEngine(){
         name:"My First Form",
     }
 });
+
+function selectField(elem,rowIndex){
+let index = fieldSet[rowIndex].Fields.findIndex((x) => x.id == elem);
+setSelected(fieldSet[rowIndex].Fields[index]);
+}
+
 function removeField(e){
     let dataTarget = e.target.getAttribute('data-target')
     let arr = dataTarget.split('-');
@@ -41,7 +48,6 @@ function addNewField(){
     alert('new field dialog')
 }
 function innerRight(elem,rowIndex){
-    console.log(elem,rowIndex);
     let index = fieldSet[rowIndex].Fields.findIndex((x) => x.id == elem);
     if (index === fieldSet[rowIndex].Fields.length - 1){
         alert('Cant move right')
@@ -136,14 +142,12 @@ for(let x = 0; x < fieldSet.length; x ++){
 let gridCount;
 gridCount = fieldSet[x].Fields.length
 if(gridCount > 0 ) {
-console.log('Grid count is over 0');
 
 rowFields = fieldSet[x].Fields.map((columnField) => {
     return <div key={columnField.id}>
                 <div className="container relative rounded border-dotted cursor-pointer group ">
-                    <div className="overlay flex hidden group-hover:block border-2 border-gray-500 border-dashed rounded text-center">
-                    <button className="p-1 rounded-md mx-1 text-center align-middle text-xs cursor-pointer hover:bg-slate-100">Add<BsPlusCircle size={14} className=" inline text-green-600 mx-2"></BsPlusCircle> </button>
-                    <button className="p-1 rounded-md mx-1 text-center align-middle text-xs cursor-pointer hover:bg-slate-100">Edit <BsPencilFill size={14} className=" inline text-blue-600 mx-2"></BsPencilFill> </button>
+                    <div onClick={() => selectField(columnField.id,x)}   className="overlay flex hidden group-hover:block border-2 border-gray-500 border-dashed rounded text-center">
+                    <button className="p-1 rounded-md mx-1 text-center align-middle bg-green-200 text-xs cursor-pointer hover:bg-slate-100">Add<BsPlusCircle size={14} className=" inline text-green-600 mx-2"></BsPlusCircle> </button>
                     <button data-target={x + '-' +columnField.id} onClick={removeField} className="hover:bg-red-600 p-1 rounded-md text-center align-middle text-xs cursor-pointer mx-1 bg-red-500 text-white">Delete<BsXCircle size={14} className="text-white inline text-red-600 mx-2"></BsXCircle> </button>
                     <div className="flex justify-between">
                        <BsFillArrowLeftCircleFill data-target={x + '-' +columnField.id} onClick={() => innerLeft(columnField.id,x)} size={20} className="ml-3"></BsFillArrowLeftCircleFill>
@@ -151,8 +155,7 @@ rowFields = fieldSet[x].Fields.map((columnField) => {
                     </div>
                     </div>
                     <div className="text-left">
-                    <label htmlFor="" className="text-left">{columnField.placeholder}</label>
-                    <input  className="text-2xl p-1 m-1  border-2 rounded w-full outline-gray-300" type={columnField.type} placeholder={columnField.placeholder}></input>
+                    <FormField props={columnField} />
                     </div>
 
                 </div>
@@ -163,7 +166,7 @@ else{
     
     rowFields = <div key={'new'}>
     <div className="container rounded border-dotted cursor-pointer group mt-2 text-center">
-        <button className="rounded p-2 text-lg bg-slate-100" onClick={addNewField}>Add Element</button>
+        <button className="rounded px-2 py-1 text-lg bg-slate-100" onClick={addNewField}>Add Element</button>
     </div>
 </div>
 }
@@ -196,7 +199,7 @@ return(
     </div>
     </div>
     <div className="col-span-6 " >
-        <EditPanel></EditPanel>
+        <EditPanel selected={selected}></EditPanel>
     </div>
    
     </div>
