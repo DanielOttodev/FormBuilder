@@ -9,9 +9,9 @@ export default function FormEngine(){
     const [previousField,setPreviousField] = useState([]);
     const [fieldSet,setFieldSet] = useState([
     
-        {Fields:[{type:'text',placeholder:'Name',id:uuidv4(), html:'input'}],id: uuidv4()},
+        {Fields:[{type:'text',placeholder:'Name',id:uuidv4(), html:'input',required:true}],id: uuidv4()},
         {Fields:[{type:'number',placeholder:'Phone',id:uuidv4(), html:'input'},{type:'text',placeholder:'Email',id:uuidv4(), html:'input'},{type:'number',placeholder:'ABN',id:uuidv4(), html:'input'}],id: uuidv4()},
-        {Fields:[{type:'text',placeholder:'Test2',id:uuidv4(), html:'input'},{type:'number',placeholder:'Test3',id:uuidv4(), html:'input'}],id: uuidv4()},
+        {Fields:[{type:'text',placeholder:'Test2',id:uuidv4(), html:'textarea'},{type:'number',placeholder:'Test3',id:uuidv4(), html:'input'}],id: uuidv4()},
         {Fields:[],id: uuidv4()},
         
     
@@ -28,14 +28,14 @@ let index = fieldSet[rowIndex].Fields.findIndex((x) => x.id == elem);
 setSelected(fieldSet[rowIndex].Fields[index]);
 }
 
-function removeField(e){
-    let dataTarget = e.target.getAttribute('data-target')
-    let arr = dataTarget.split('-');
+function removeField(elem){
+
+    console.log('deleting!');
     setFieldSet((prev) => {
         setPreviousField(prev);
         const newData = prev.map(items => ({
             ...items,
-            Fields: items.Fields.filter(item => item.id !== arr[1])      
+            Fields: items.Fields.filter(item => item.id !== elem)      
         }))
         return newData;
     })
@@ -147,9 +147,10 @@ rowFields = fieldSet[x].Fields.map((columnField) => {
     return <div key={columnField.id}>
                 <div className="container relative rounded border-dotted cursor-pointer group ">
                     <div onClick={() => selectField(columnField.id,x)}   className="overlay flex hidden group-hover:block border-2 border-gray-500 border-dashed rounded text-center">
-                    <button className="p-1 rounded-md mx-1 text-center align-middle bg-green-200 text-xs cursor-pointer hover:bg-slate-100">Add<BsPlusCircle size={14} className=" inline text-green-600 mx-2"></BsPlusCircle> </button>
-                    <button data-target={x + '-' +columnField.id} onClick={removeField} className="hover:bg-red-600 p-1 rounded-md text-center align-middle text-xs cursor-pointer mx-1 bg-red-500 text-white">Delete<BsXCircle size={14} className="text-white inline text-red-600 mx-2"></BsXCircle> </button>
+                    <button className="z-40 p-1 rounded-md mx-1 text-center align-middle bg-green-200 text-xs cursor-pointer hover:bg-slate-100">Add<BsPlusCircle size={14} className=" inline text-green-600 mx-2"></BsPlusCircle> </button>
+                    <button data-target={x + '-' +columnField.id} onClick={() => removeField(columnField.id)} className="hover:bg-red-600 p-1 rounded-md text-center z-40 align-middle text-xs cursor-pointer mx-1 bg-red-500 text-white">Delete<BsXCircle size={14} className="text-white inline text-red-600 mx-2"></BsXCircle> </button>
                     <div className="flex justify-between">
+                
                        <BsFillArrowLeftCircleFill data-target={x + '-' +columnField.id} onClick={() => innerLeft(columnField.id,x)} size={20} className="ml-3"></BsFillArrowLeftCircleFill>
                        <BsFillArrowRightCircleFill data-target={x + '-' +columnField.id} onClick={() => innerRight(columnField.id,x)} size={20} className="mr-3"></BsFillArrowRightCircleFill>
                     </div>
