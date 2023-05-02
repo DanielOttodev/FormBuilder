@@ -11,13 +11,13 @@ function App() {
     <div>
        <Navbar></Navbar>
        <div className=' main-content'>
-       <div className='border shadow'>
+       <div className='border shadow bg-slate-200'>
         <ul className='flex justify-end py-2 px-5'>
           <li><button className='bg-zinc-100 py-1 px-2 rounded-full hover:bg-zinc-200'>Preview Form</button> </li>
       <li> <a href=""><AiTwotoneSetting className='ml-2 inline text-orange-500' size={20}/></a></li>
         </ul>
        </div>
-        <div className='x-5 py-10'>
+        <div>
           <Routes>
             <Route path ="/" element={<FormEngine/>}></Route>
             </Routes>           

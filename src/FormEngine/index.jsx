@@ -188,7 +188,7 @@ allRows.push(row);
 }
 return(
     <div className="grid grid-cols-6 gap-2  ">
-    <div className="m-3 container mx-auto col-span-6 border  shadow p-5">
+    <div className="mb-3 container mx-auto col-span-6 border  shadow p-5">
     <h3 className="text-3xl mb-5 text-center">{formData.form.name}</h3>
     {allRows}
     <div className="text-center">
