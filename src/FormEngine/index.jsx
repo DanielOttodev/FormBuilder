@@ -12,7 +12,7 @@ export default function FormEngine(){
         {Fields:[{type:'text',placeholder:'Name',id:uuidv4(), html:'input',required:true}],id: uuidv4()},
         {Fields:[{type:'number',placeholder:'Phone',id:uuidv4(), html:'input'},{type:'text',placeholder:'Email',id:uuidv4(), html:'input'},{type:'number',placeholder:'ABN',id:uuidv4(), html:'input'}],id: uuidv4()},
         {Fields:[{type:'text',placeholder:'Test2',id:uuidv4(), html:'textarea'},{type:'number',placeholder:'Test3',id:uuidv4(), html:'input'}],id: uuidv4()},
-        {Fields:[],id: uuidv4()},
+        {Fields:[{type:'text',placeholder:'Dropdown',id:uuidv4(), html:'select',values:['Option 1','Option 2','Option 3']}],id: uuidv4()},
         
     
     ]);
